@@ -1,18 +1,25 @@
-<% if @restaurants.any? %>
-  <% @restaurants.each do |restaurant| %>
-    <h1><%= link_to restaurant.name, restaurant_path(restaurant) %></h1>
+<div class='row'>
+  <% if @restaurants.any? %>
+    <% @restaurants.each do |restaurant| %>
 
-    <%= link_to 'Edit', edit_restaurant_path(restaurant) %> |
-    <%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete, data: { confirm: 'Are you sure?' } %> |
-    <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %>
+      <div class='col-md-4'>
+        <h1><%= link_to restaurant.name, restaurant_path(restaurant) %></h1>
 
-    <h3 class='average_review'>
-      <%= restaurant.average_score %> / 5
-    </h3>
+        <%= link_to 'Edit', edit_restaurant_path(restaurant), class: 'btn btn-primary' %>
+
+        <%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %> 
+
+        <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant), class: 'btn btn-success' %>
+
+        <h3 class='average_review'>
+          <%= star_rating(restaurant.average_score) %>
+        </h3>
+      </div>
+    <% end %>
+  <% else %>
+    No restaurants yet
   <% end %>
-<% else %>
-  No restaurants yet
-<% end %>
+</div>
 
 <br>
 <%= link_to 'Add a restaurant', new_restaurant_path %>
